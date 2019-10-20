@@ -1,6 +1,6 @@
 import Vue from 'vue'
 import ElementUI from 'element-ui'
-import Chronos from 'chronos'
+import Chronos from 'vue-chronos'
 import Demo from './components/Demo.vue'
 import 'element-ui/lib/theme-chalk/index.css'
 
