@@ -2,26 +2,68 @@
 
 > Lightweight promise-based loading controller for Vue.js
 
-## Build Setup
+## Demo
 
-``` bash
-# install dependencies
-npm install
+![Basic usage](./images/basic-usage.gif)
 
-# serve with hot reload at localhost:8080
-npm run dev
+## Usage
 
-# build for production with minification
-npm run build
+```js
+import Vue from 'vue'
+import Chronos from 'chronos'
 
-# build for production and view the bundle analyzer report
-npm run build --report
+Vue.use(Chronos, {
+  getterName: '$chronos',
+  optionName: 'chronos',
+})
 
-# run unit tests
-npm run unit
+export default {
+  data () {
+    return {
+      form: {
+        selectA1: 'a',
+        selectA2: null,
+        selectB1: null,
+        selectB2: null,
+      },
+      optionsA1: ['a', 'b'],
+      optionsA2: [],
+      optionsB1: ['a', 'b'],
+      optionsB2: [],
+    }
+  },
 
-# run all tests
-npm test
+  watch: {
+    async 'form.selectA1' () {
+      const promise = new Promise(resolve => {
+        setTimeout(() => {
+          this.optionsA2 = ['c', 'd']
+          this.optionsB2 = ['c', 'd']
+          resolve()
+        }, 1000)
+      })
+
+      await this.$chronos.$load('form.selectA1', promise)
+    },
+  },
+
+  chronos () {
+    return [
+      ['form.selectA1', 'form.selectA2'],
+      ['form.selectB1', 'form.selectA2'],
+      ['form.selectA1', 'form.selectB2'],
+      ['form.selectB1', 'form.selectB2'],
+    ]
+  },
+}
 ```
 
-For a detailed explanation on how things work, check out the [guide](http://vuejs-templates.github.io/webpack/) and [docs for vue-loader](http://vuejs.github.io/vue-loader).
+## API
+
+### Variables
+1. `$sending`
+2. `$receiving`
+3. `$pending`
+
+### Methods
+1. `$load (path, promise)`
