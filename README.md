@@ -2,15 +2,21 @@
 
 > Lightweight promise-based loading controller for Vue.js
 
+[![NPM](https://nodei.co/npm/vue-chronos.png?compact=true)](https://www.npmjs.org/package/vue-chronos)
+
 ## Demo
 
 ![Basic usage](./images/basic-usage.gif)
 
 ## Usage
 
+```sh
+npm install vue-chronos
+```
+
 ```js
 import Vue from 'vue'
-import Chronos from 'chronos'
+import Chronos from 'vue-chronos'
 
 Vue.use(Chronos, {
   getterName: '$chronos',
