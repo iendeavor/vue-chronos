@@ -12,7 +12,14 @@ const install = function (Vue, options) {
       if (hasChronos(this, options)) {
         this._chronos = Vue.observable({instance: {}})
 
-        this.$options.computed[options.getterName] = () => this._chronos.instance.userInterface
+        this.$options.computed = this.$options.computed || {}
+        this.$options.computed[options.getterName] = () => {
+          return (
+            this._chronos &&
+            this._chronos.instance &&
+            this._chronos.instance.userInterface
+          )
+        }
       }
       return {}
     },
@@ -23,9 +30,10 @@ const install = function (Vue, options) {
       }
     },
 
-    beforeDestroy () {
+    destroyed () {
       if (hasChronos(this, options)) {
-        this._chronos.instance.$destroy()
+        this._chronos && this._chronos.instance && this._chronos.instance.$destroy()
+        delete this._chronos
       }
     },
   })

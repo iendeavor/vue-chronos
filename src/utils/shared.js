@@ -8,7 +8,7 @@ const deepCopy = object => {
   }
 }
 const dfs = (object, callback) => {
-  _dfs({ root: object }, callback)
+  _dfs({'': object}, callback)
 }
 
 const _dfs = (object, callback, isRoot = true) => {

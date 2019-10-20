@@ -20,31 +20,35 @@ const createVm = (Vue, vm, options) => {
     data () {
       return {
         // used for record requests
-        object: {},
+        state: {},
       }
     },
 
     computed: {
       userInterface () {
-        const object = deepCopy(this.object)
+        const state = deepCopy(this.state)
 
-        this.addPublicKeys(object)
-        this.addPublicMethods(object)
-        this.deletePrivateKeys(object)
+        this.addPublicKeys(state)
+        this.addPublicMethods(state)
+        this.deletePrivateKeys(state)
 
-        return object
+        return state
       },
 
-      pairPaths () {
-        const pairPaths = vm.$options[options.optionName]
-        return isFunction(pairPaths) ? pairPaths.call(vm) : pairPaths
+      dependentPaths () {
+        return Array.from(new Set(this.dependentPairPaths.reduce((dependentPaths, pair) => dependentPaths.concat(pair), [])))
       },
 
-      groupPaths () {
+      dependentPairPaths () {
+        const dependentPairPaths = vm.$options[options.optionName]
+        return isFunction(dependentPairPaths) ? dependentPairPaths.call(vm) : dependentPairPaths
+      },
+
+      dependentGroupPaths () {
         const visitGroup = group => {
           const currentSender = group[group.length - 1]
           rootSenders.delete(currentSender)
-          const receivers = this.pairPaths
+          const receivers = this.dependentPairPaths
             .filter(([sender]) => sender === currentSender)
             .map(([_, receiver]) => receiver)
 
@@ -58,84 +62,82 @@ const createVm = (Vue, vm, options) => {
         }
 
         const groups = []
-        const rootSenders = new Set(this.pairPaths.map(([sender]) => sender))
+        const rootSenders = new Set(this.dependentPairPaths.map(([sender]) => sender))
         while (rootSenders.size !== 0) visitGroup([[...rootSenders.values()].shift()])
 
         return groups
       },
-
-      paths () {
-        return Array.from(new Set(this.pairPaths.reduce((paths, pair) => paths.concat(pair))))
-      },
     },
 
     watch: {
-      pairPaths: {
+      dependentPairPaths: {
         immediate: true,
-        handler (newValue, oldValue) {
-          this.verify(newValue)
-          this.object = this.genDefaultObject(newValue)
+        handler () {
+          this.verify()
+          this.state = this.genDefaultState()
         },
       },
     },
 
     methods: {
       async load (theSender, promise) {
-        // prevent change pairPaths and load simultaneously.
+        // prevent change dependentPairPaths and load simultaneously.
         await this.$nextTick()
 
-        // prevent reset object while loading.
-        const object = this.object
-        const pairPaths = this.pairPaths
-        const groupPaths = this.groupPaths
+        // prevent reset state while loading.
+        const state = this.state
+        const dependentPairPaths = this.dependentPairPaths
+        const dependentGroupPaths = this.dependentGroupPaths
 
         try {
-          this.addCount(object, pairPaths, groupPaths, theSender, 1)
+          this.addCount(state, dependentPairPaths, dependentGroupPaths, theSender, 1)
           await promise
         } finally {
-          this.addCount(object, pairPaths, groupPaths, theSender, -1)
+          this.addCount(state, dependentPairPaths, dependentGroupPaths, theSender, -1)
         }
       },
 
-      addCount (object, pairPaths, groupPaths, theSender, count) {
+      addCount (state, dependentPairPaths, dependentGroupPaths, theSender, count) {
         // receiving
-        pairPaths = pairPaths.filter(([sender, receiver]) => sender === theSender)
-        const receiverPathList = pairPaths.map(([sender, receiver]) => receiver)
+        dependentPairPaths = dependentPairPaths.filter(([sender, receiver]) => sender === theSender)
+        const receiverPathList = dependentPairPaths.map(([sender, receiver]) => receiver)
         receiverPathList.forEach(path => {
           path += '.$receivingCount'
-          const value = getByPath({object, path}) + count
-          setByPath({object, path, value})
+          const value = getByPath(state, path) + count
+          setByPath(state, path, value)
         })
 
         // sending
         const senderPathList = Array.from(new Set(
-          groupPaths
+          dependentGroupPaths
             .filter(group => group.some(path => receiverPathList.includes(path)))
             .reduce((list, group) => list.concat(group), [])
             .filter(path => receiverPathList.includes(path) === false)
         ))
         senderPathList.forEach(path => {
           path += '.$sendingCount'
-          const value = getByPath({object, path}) + count
-          setByPath({object, path, value})
+          const value = getByPath(state, path) + count
+          setByPath(state, path, value)
         })
       },
 
-      verify (pairPaths) {
+      verify () {
         const throws = lines => {
           lines.unshift('\n========== chronos ==========')
           lines.push('=============================\n')
           throw new Error(lines.join('\n'))
         }
 
-        if (Object.prototype.toString.call(pairPaths) !== '[object Array]') {
+        const dependentPairPaths = this.dependentPairPaths
+
+        if (Object.prototype.toString.call(dependentPairPaths) !== '[object Array]') {
           throws([
             `The {${options.optionName}} should be an array, but found:`,
-            `{${pairPaths}}`,
+            `{${dependentPairPaths}}`,
           ])
         }
 
-        const stringifiedDependentPairList = pairPaths.map(pair => JSON.stringify(pair))
+        const stringifiedDependentPairList = dependentPairPaths.map(pair => JSON.stringify(pair))
         stringifiedDependentPairList.forEach(pair => {
           if (stringifiedDependentPairList.indexOf(pair) !== stringifiedDependentPairList.lastIndexOf(pair)) {
             throws([
@@ -145,7 +147,7 @@ const createVm = (Vue, vm, options) => {
           }
         })
 
-        pairPaths.forEach(pair => {
+        dependentPairPaths.forEach(pair => {
           if (Object.prototype.toString.call(pair) !== '[object Array]') {
             throws([
               `The {${options.optionName}}'s pair should be an array, but found:`,
@@ -167,8 +169,8 @@ const createVm = (Vue, vm, options) => {
         })
 
         const fallback = {}
-        this.paths.forEach(path => {
-          if (getByPath({object: vm.$data, path, fallback}) === fallback) {
+        this.dependentPaths.forEach(path => {
+          if (getByPath(vm.$data, path, fallback) === fallback) {
             throws([
               `The path of {${options.optionName}}'s pair is not found in this.$data`,
               `{${path}}`,
@@ -177,13 +179,13 @@ const createVm = (Vue, vm, options) => {
         })
       },
 
-      genDefaultObject (pairPaths) {
-        const object = {}
-        this.paths.forEach(path => setByPath({object, path, value: this.genDefaultLeafValue}))
-        return object
+      genDefaultState () {
+        const state = {}
+        this.dependentPaths.forEach(path => setByPath(state, path, this.genDefaultLeafState))
+        return state
       },
 
-      genDefaultLeafValue () {
+      genDefaultLeafState () {
         return {
           $leaf: true,
           $sending: false,
@@ -194,7 +196,7 @@ const createVm = (Vue, vm, options) => {
         }
       },
 
-      addPublicKeys (object) {
+      addPublicKeys (state) {
         const callback = (value, key) => {
           if (isPublicKey(key)) {
             if (value.$leaf) {
@@ -209,14 +211,14 @@ const createVm = (Vue, vm, options) => {
             }
           }
         }
-        dfs(object, callback)
+        dfs(state, callback)
       },
 
-      addPublicMethods (object) {
-        object.$load = this.load
+      addPublicMethods (state) {
+        state.$load = this.load
       },
 
-      deletePrivateKeys (object) {
+      deletePrivateKeys (state) {
         const callback = value => {
           if (isObject(value)) {
             delete value['$leaf']
@@ -224,7 +226,7 @@ const createVm = (Vue, vm, options) => {
             delete value['$receivingCount']
           }
         }
-        dfs(object, callback)
+        dfs(state, callback)
       },
     },
   })
