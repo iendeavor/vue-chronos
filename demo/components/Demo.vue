@@ -66,7 +66,7 @@
             v-for="(item, index) of optionsA1"
             :key="index"
             :label="item"
-            :value="index">
+            :value="item">
           </el-option>
 
         </el-select>
@@ -85,7 +85,7 @@
             v-for="(item, index) of optionsB1"
             :key="index"
             :label="item"
-            :value="index">
+            :value="item">
           </el-option>
 
         </el-select>
@@ -106,7 +106,7 @@
             v-for="(item, index) of optionsA2"
             :key="index"
             :label="item"
-            :value="index">
+            :value="item">
           </el-option>
 
         </el-select>
@@ -125,7 +125,7 @@
             v-for="(item, index) of optionsB2"
             :key="index"
             :label="item"
-            :value="index">
+            :value="item">
           </el-option>
 
         </el-select>
