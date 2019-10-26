@@ -1,6 +1,6 @@
 {
   "name": "vue-chronos",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "Lightweight promise-based loading controller for Vue.js",
   "author": "Ernest <iattempt.net@gmail.com>",
   "private": false,
