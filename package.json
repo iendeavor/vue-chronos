@@ -12,9 +12,6 @@
     "lint": "eslint --ext .js,.vue src test/unit",
     "build": "cross-env NODE_ENV=production webpack --progress --hide-modules"
   },
-  "dependencies": {
-    "vue": "^2.6.10"
-  },
   "devDependencies": {
     "autoprefixer": "^7.1.2",
     "babel-core": "^6.22.1",
@@ -97,5 +94,8 @@
   "repository": {
     "type": "git",
     "url": "git+https://github.com/iendeavor/vue-chronos"
+  },
+  "peerDependencies": {
+    "vue": "^2.6.11"
   }
 }
