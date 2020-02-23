@@ -2,18 +2,15 @@ import {
   isObject,
 } from './type-checker'
 
-let debug = false
 let __defaultSeparator = '.'
 
 const isValidPath = value => typeof value === 'string'
 const isValidSeparator = value => typeof value === 'string' && value !== ''
 
 const getByPath = (object, path, fallback = undefined, separator = __defaultSeparator) => {
-  if (debug) {
-    if (isObject(object) === false) throw Error(`${object} is not a plain Object`)
-    if (isValidPath(path) === false) throw Error(`${object} is not a valid Path`)
-    if (isValidSeparator(separator) === false) throw Error(`${object} is not a valid Separator`)
-  }
+  if (isObject(object) === false) throw Error(`${object} is not a plain Object`)
+  if (isValidPath(path) === false) throw Error(`${object} is not a valid Path`)
+  if (isValidSeparator(separator) === false) throw Error(`${object} is not a valid Separator`)
 
   return __getByPath(object, path, fallback, separator)
 }
@@ -29,11 +26,9 @@ const __getByPath = (object, path, fallback = undefined, separator = __defaultSe
 }
 
 const setByPath = (object, path, value, separator = __defaultSeparator) => {
-  if (debug) {
-    if (isObject(object) === false) throw Error(`${object} is not a plain Object`)
-    if (isValidPath(path) === false) throw Error(`${object} is not a valid Path`)
-    if (isValidSeparator(separator) === false) throw Error(`${object} is not a valid Separator`)
-  }
+  if (isObject(object) === false) throw Error(`${object} is not a plain Object`)
+  if (isValidPath(path) === false) throw Error(`${object} is not a valid Path`)
+  if (isValidSeparator(separator) === false) throw Error(`${object} is not a valid Separator`)
 
   return __setByPath(object, path, value, separator)
 }

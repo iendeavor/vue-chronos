@@ -1,5 +1,6 @@
 import Vue from 'vue'
-import Chronos from '@/../dist/vue-chronos'
+import Chronos from '../../../src/index'
+
 Vue.use(Chronos)
 
 describe('Chronos', () => {
@@ -7,9 +8,9 @@ describe('Chronos', () => {
     const vm = new Vue({
       chronos () { return [] },
     })
-    expect(vm.$options.computed && vm.$options.computed.$chronos())
-      .to.be.an('object')
-    expect(vm.$chronos)
-      .to.be.an('object')
+    expect(typeof vm.$options.computed.$chronos())
+      .toBe('object')
+    expect(typeof vm.$chronos)
+      .toBe('object')
   })
 })

@@ -1,7 +1,7 @@
 import {
   getPublicKeys,
   isPublicKey,
-} from '@/utils/vue'
+} from '../../../../src/utils/vue'
 
 describe('Vue', () => {
   it('should get public keys only', () => {
@@ -13,7 +13,7 @@ describe('Vue', () => {
     }
 
     expect(getPublicKeys(object))
-      .to.eql(['public1', 'public2'])
+      .toEqual(['public1', 'public2'])
   })
 
   it('should return true whether the key is public', () => {
@@ -21,8 +21,8 @@ describe('Vue', () => {
     const privateKey = '$private'
 
     expect(isPublicKey(publicKey))
-      .to.equal(true)
+      .toEqual(true)
     expect(isPublicKey(privateKey))
-      .to.equal(false)
+      .toEqual(false)
   })
 })

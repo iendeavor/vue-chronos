@@ -9,16 +9,26 @@
   "scripts": {
     "clean": "rimraf dist",
     "build": "node scripts/build.js",
-    "demo": "node scripts/demo.js"
+    "demo": "node scripts/demo.js",
+    "test": "jest --watch"
+  },
+  "jest": {
+    "transform": {
+      "^.+\\.jsx?$": "babel-jest"
+    }
   },
   "repository": "git@github.com:iendeavor/vue-chronos.git",
   "author": "Ernest <iattempt.net@gmail.com>",
   "license": "MIT",
   "devDependencies": {
+    "@babel/preset-env": "^7.8.4",
+    "babel-jest": "^25.1.0",
     "element-ui": "^2.13.0",
+    "jest": "^25.1.0",
     "rimraf": "^3.0.2",
     "rollup": "^1.31.1",
-    "rollup-plugin-terser": "^5.2.0"
+    "rollup-plugin-terser": "^5.2.0",
+    "vue": "^2.6.11"
   },
   "peerDependencies": {
     "vue": "^2.6.11"

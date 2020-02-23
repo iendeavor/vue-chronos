@@ -1,5 +1,5 @@
 const getPublicKeys = object => {
-  return Object.keys(object).filter(key => key.startsWith('$') === false)
+  return Object.keys(object).filter(key => isPublicKey(key))
 }
 
 const isPublicKey = key => {

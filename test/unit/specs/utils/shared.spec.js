@@ -1,7 +1,7 @@
 import {
   deepCopy,
   dfs,
-} from '@/utils/shared'
+} from '../../../../src/utils/shared'
 
 describe('shared', () => {
   it('deepCopy', () => {
@@ -16,19 +16,19 @@ describe('shared', () => {
     }
 
     expect(deepCopy(object))
-      .to.eql(object)
+      .toEqual(object)
     expect(deepCopy(object.number))
-      .to.eql(object.number)
+      .toEqual(object.number)
     expect(deepCopy(object.bool))
-      .to.eql(object.bool)
+      .toEqual(object.bool)
     expect(deepCopy(object.string))
-      .to.eql(object.string)
+      .toEqual(object.string)
     expect(deepCopy(object.object))
-      .to.eql(object.object)
+      .toEqual(object.object)
     expect(deepCopy(object.array))
-      .to.eql(object.array)
+      .toEqual(object.array)
     expect(deepCopy(object.null))
-      .to.eql(object.null)
+      .toEqual(object.null)
   })
   it('dfs', () => {
     const object = {
@@ -47,6 +47,6 @@ describe('shared', () => {
 
     dfs(object, callback)
     expect(result)
-      .to.equal('d1c1b1a1')
+      .toEqual('d1c1b1a1')
   })
 })

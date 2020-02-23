@@ -1,5 +1,5 @@
 import Vue from 'vue'
-import Chronos from '@/main.js'
+import Chronos from '../../../src/index'
 
 Vue.use(Chronos, {
   optionName: 'chronos',
@@ -10,38 +10,38 @@ describe('Chronos', () => {
   it('would not create any chronos properties', () => {
     const vm = new Vue({})
 
-    expect(vm.$options.computed && vm.$options.computed.$chronos)
-      .to.be.an('undefined')
+    expect(vm.$options.computed)
+      .toBeUndefined()
     expect(vm.$chronos)
-      .to.be.an('undefined')
+      .toBeUndefined()
   })
 
   it('would create chronos properties', () => {
     const vm = new Vue({
       chronos () { return [] },
     })
-    expect(vm.$options.computed && vm.$options.computed.$chronos())
-      .to.be.an('object')
-    expect(vm.$chronos)
-      .to.be.an('object')
+    expect(typeof vm.$options.computed.$chronos())
+      .toBe('object')
+    expect(typeof vm.$chronos)
+      .toBe('object')
 
     const vm2 = new Vue({
       chronos: [],
     })
-    expect(vm2.$options.computed && vm2.$options.computed.$chronos())
-      .to.be.an('object')
-    expect(vm2.$chronos)
-      .to.be.an('object')
+    expect(typeof vm2.$options.computed.$chronos())
+      .toBe('object')
+    expect(typeof vm2.$chronos)
+      .toBe('object')
   })
 
   it('should destory chronos instance on beforeDestory', () => {
     const vm = new Vue({
       chronos: [],
     })
-    expect(vm.$options.computed && vm.$options.computed.$chronos())
-      .to.be.not.an('undefined')
+    expect(vm.$options.computed.$chronos())
+      .not.toBeUndefined()
     vm.$destroy()
-    expect(vm.$options.computed && vm.$options.computed.$chronos())
-      .to.be.an('undefined')
+    expect(vm.$options.computed.$chronos())
+      .toBeUndefined()
   })
 })

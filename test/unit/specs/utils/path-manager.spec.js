@@ -1,7 +1,7 @@
 import {
   getByPath,
   setByPath,
-} from '@/utils/path-manager'
+} from '../../../../src/utils/path-manager'
 
 describe('Path Manager', () => {
   it('getByPath with invalid', () => {
@@ -20,11 +20,11 @@ describe('Path Manager', () => {
     const fallback = null
 
     expect(() => getByPath(invalidObject, validPath, fallback, validSeparator))
-      .to.throw()
+      .toThrow()
     expect(() => getByPath(validObject, invalidPath, fallback, validSeparator))
-      .to.throw()
+      .toThrow()
     expect(() => getByPath(validObject, validPath, fallback, invalidSeparator))
-      .to.throw()
+      .toThrow()
   })
 
   it('getByPath', () => {
@@ -43,12 +43,12 @@ describe('Path Manager', () => {
     const fallback = 'fallback'
 
     expect(getByPath(object, existentPath, fallback))
-      .to.equal('value')
+      .toEqual('value')
 
     expect(getByPath(object, nonExistentPath1, fallback))
-      .to.equal(fallback)
+      .toEqual(fallback)
     expect(getByPath(object, nonExistentPath2, fallback))
-      .to.equal(fallback)
+      .toEqual(fallback)
   })
 
   it('setByPath with invalid', () => {
@@ -61,11 +61,11 @@ describe('Path Manager', () => {
     const value = null
 
     expect(() => setByPath(invalidObject, validPath, value, validSeparator))
-      .to.throw()
+      .toThrow()
     expect(() => setByPath(validObject, invalidPath, value, validSeparator))
-      .to.throw()
+      .toThrow()
     expect(() => setByPath(validObject, validPath, value, invalidSeparator))
-      .to.throw()
+      .toThrow()
   })
 
   it('setByPath', () => {
@@ -75,6 +75,6 @@ describe('Path Manager', () => {
 
     setByPath(object, path, value)
     expect(object.nested1.nested11.value)
-      .to.equal('value')
+      .toEqual('value')
   })
 })

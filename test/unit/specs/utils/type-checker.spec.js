@@ -1,7 +1,7 @@
 import {
   isObject,
   isFunction,
-} from '@/utils/type-checker'
+} from '../../../../src/utils/type-checker'
 
 describe('Type checker', () => {
   it('isObject', () => {
@@ -13,13 +13,13 @@ describe('Type checker', () => {
     }
 
     expect(isObject(object.object))
-      .to.equal(true)
+      .toEqual(true)
     expect(isObject(object.function))
-      .to.equal(false)
+      .toEqual(false)
     expect(isObject(object.symbol))
-      .to.equal(false)
+      .toEqual(false)
     expect(isObject(object.array))
-      .to.equal(false)
+      .toEqual(false)
   })
 
   it('isFunction', () => {
@@ -31,12 +31,12 @@ describe('Type checker', () => {
     }
 
     expect(isFunction(object.function))
-      .to.equal(true)
+      .toEqual(true)
     expect(isFunction(object.object))
-      .to.equal(false)
+      .toEqual(false)
     expect(isFunction(object.symbol))
-      .to.equal(false)
+      .toEqual(false)
     expect(isFunction(object.array))
-      .to.equal(false)
+      .toEqual(false)
   })
 })
