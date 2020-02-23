@@ -1,5 +1,5 @@
 import Vue from 'vue'
-import Chronos from '../../../src/index'
+import Chronos from '../../../dist/vue-chronos.esm.min.js'
 
 Vue.use(Chronos)
 
