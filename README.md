@@ -3,6 +3,7 @@
 > Lightweight promise-based loading controller for Vue.js
 
 [![NPM](https://nodei.co/npm/vue-chronos.png?compact=true)](https://www.npmjs.org/package/vue-chronos)
+[![Build Status](https://img.shields.io/travis/iendeavor/vue-chronos)](https://travis-ci.org/iendeavor/vue-chronos)
 
 ## Demo
 
