@@ -2,7 +2,7 @@ import {
   isObject,
 } from './type-checker'
 
-let debug = process && process.env && process.env.NODE_ENV !== 'production'
+let debug = false
 let __defaultSeparator = '.'
 
 const isValidPath = value => typeof value === 'string'

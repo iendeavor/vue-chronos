@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <title>vue-chronos</title>
+
+    <!-- vue -->
+    <script src="https://cdn.jsdelivr.net/npm/vue"></script>
+
+    <!-- element ui -->
+    <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
+    <script src="https://unpkg.com/element-ui/lib/index.js"></script>
+
+    <!-- vue-chronos -->
+    <script src="../dist/vue-chronos.js"></script>
+  </head>
+  <body>
+    <div id="app">
+
+      <div>
+        <h4>Control Panel</h4>
+        <el-form label-position="right" label-width="150px">
+          <el-form-item label="Scenario">
+            <el-select
+              v-model="scenario"
+              size="small"
+              clearable>
+
+              <el-option
+                v-for="(item, index) of scenarioOptions"
+                :key="index"
+                :label="item.label"
+                :value="item.value">
+              </el-option>
+            </el-select>
+          </el-form-item>
+
+          <el-form-item label="API response between:">
+            <el-input
+              v-model.lazy="minDelay"
+              @change="handleChangeMinDelay"
+              type="number"
+              min="0"
+              size="small"
+              :style="{width: 'auto'}"
+            ></el-input>
+            ~
+            <el-input
+              v-model.lazy="maxDelay"
+              @change="handleChangeMaxDelay"
+              type="number"
+              min="0"
+              size="small"
+              :style="{width: 'auto'}"
+            ></el-input>
+          </el-form-item>
+
+          <el-form-item>
+            <el-button
+              @click="handleClickReset"
+              type="danger"
+              size="small"
+              plain>
+              Reset fields
+            </el-button>
+          </el-form-item>
+        </el-form>
+
+        <hr />
+
+        <h4>Demo</h4>
+        <el-form class="demo" label-position="right" label-width="150px">
+          <div>
+            <el-form-item v-if="isVisible.form.selectA1" label="A1">
+              <el-select
+                :disabled="$c.form.selectA1.$sending || isUnavailable.form.selectA1"
+                v-loading="$c.form.selectA1.$receiving"
+                v-model="form.selectA1"
+                @change="handleChangeSelectA1"
+                size="small"
+                clearable>
+
+                <el-option
+                  v-for="(item, index) of optionsA1"
+                  :key="index"
+                  :label="item"
+                  :value="item">
+                </el-option>
+
+              </el-select>
+            </el-form-item>
+
+            <el-form-item v-if="isVisible.form.selectB1" label="B1">
+              <el-select
+                :disabled="$c.form.selectB1.$sending || isUnavailable.form.selectB1"
+                v-loading="$c.form.selectB1.$receiving"
+                v-model="form.selectB1"
+                @change="handleChangeSelectB1"
+                size="small"
+                clearable>
+
+                <el-option
+                  v-for="(item, index) of optionsB1"
+                  :key="index"
+                  :label="item"
+                  :value="item">
+                </el-option>
+
+              </el-select>
+            </el-form-item>
+          </div>
+
+          <div>
+            <el-form-item v-if="isVisible.form.selectA2" label="A2">
+              <el-select
+                :disabled="$c.form.selectA2.$sending || isUnavailable.form.selectA2"
+                v-loading="$c.form.selectA2.$receiving"
+                v-model="form.selectA2"
+                @change="handleChangeSelectA2"
+                size="small"
+                clearable>
+
+                <el-option
+                  v-for="(item, index) of optionsA2"
+                  :key="index"
+                  :label="item"
+                  :value="item">
+                </el-option>
+
+              </el-select>
+            </el-form-item>
+
+            <el-form-item v-if="isVisible.form.selectB2" label="B2">
+              <el-select
+                :disabled="$c.form.selectB2.$sending || isUnavailable.form.selectB2"
+                v-loading="$c.form.selectB2.$receiving"
+                v-model="form.selectB2"
+                @change="handleChangeSelectB2"
+                size="small"
+                clearable>
+
+                <el-option
+                  v-for="(item, index) of optionsB2"
+                  :key="index"
+                  :label="item"
+                  :value="item">
+                </el-option>
+
+              </el-select>
+            </el-form-item>
+          </div>
+        </el-form>
+      </div>
+    </div>
+
+    <script src="./index.js"></script>
+
+  </body>
+</html>

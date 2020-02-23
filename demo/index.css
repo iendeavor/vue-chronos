@@ -1,0 +1,14 @@
+.el-form > .el-form-item {
+  margin-bottom: 0 !important;
+}
+
+.demo > div {
+  display: inline-block;
+  width: 45%;
+  vertical-align: top;
+}
+
+.demo .el-input__inner,
+.demo .el-select {
+  width: 100px;
+}

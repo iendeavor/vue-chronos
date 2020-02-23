@@ -1,4 +1,4 @@
-import { createVm } from '@/chronos'
+import { createVm } from './chronos'
 
 const hasChronos = (vm, options) => [options.optionName] in vm.$options
 

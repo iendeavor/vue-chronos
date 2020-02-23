@@ -1,19 +1,19 @@
 import {
   deepCopy,
   dfs,
-} from '@/utils/shared'
+} from './utils/shared'
 import {
   getPublicKeys,
   isPublicKey,
-} from '@/utils/vue'
+} from './utils/vue'
 import {
   setByPath,
   getByPath,
-} from '@/utils/path-manager'
+} from './utils/path-manager'
 import {
   isObject,
   isFunction,
-} from '@/utils/type-checker'
+} from './utils/type-checker'
 
 const createVm = (Vue, vm, options) => {
   return new Vue({
