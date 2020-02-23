@@ -218,16 +218,6 @@ const createVm = (Vue, vm, options) => {
             ]);
           }
         });
-
-        const fallback = {};
-        this.dependentPaths.forEach(path => {
-          if (getByPath(vm.$data, path, fallback) === fallback) {
-            throws([
-              `The path of {${options.optionName}}'s pair is not found in this.$data`,
-              `{${path}}`,
-            ]);
-          }
-        });
       },
 
       genDefaultState () {
