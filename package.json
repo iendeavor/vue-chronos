@@ -1,6 +1,6 @@
 {
   "name": "vue-chronos",
-  "version": "2.0.0-alpha",
+  "version": "2.0.0-alpha.1",
   "description": "Lightweight promise-based loading controller for Vue.js",
   "main": "dist/vue-chronos.common.min.js",
   "module": "dist/vue-chronos.esm.min.js",
