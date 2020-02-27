@@ -1,16 +1,14 @@
-import { isPlainObject } from './type-checker'
+import {
+  isPlainObject,
+} from './type-checker'
 
 const deepCopy = object => {
-  if (isPlainObject(object)) {
-    return JSON.parse(JSON.stringify(object))
-  } else {
-    return object
-  }
+  return JSON.parse(JSON.stringify(object))
 }
+
 const dfs = (object, callback) => {
   _dfs({'': object}, callback)
 }
-
 const _dfs = (object, callback, isRoot = true) => {
   if (isPlainObject(object)) {
     Object.keys(object).forEach(key => {

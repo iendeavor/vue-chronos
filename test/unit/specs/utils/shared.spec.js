@@ -29,6 +29,13 @@ describe('shared', () => {
       .toEqual(object.array)
     expect(deepCopy(object.null))
       .toEqual(object.null)
+
+    expect(deepCopy(object))
+      .not.toBe(object)
+    expect(deepCopy(object.object))
+      .not.toBe(object.object)
+    expect(deepCopy(object.array))
+      .not.toBe(object.array)
   })
   it('dfs', () => {
     const object = {
