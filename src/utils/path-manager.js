@@ -14,7 +14,7 @@ const getByPath = (object, path, fallback = undefined) => {
     const pathParts = path.split(SEPARATOR)
     const deepestPath = pathParts.pop()
     pathParts.forEach(pathPart => { object = object[pathPart] })
-    return deepestPath in object ? object[deepestPath] : fallback
+    return object.hasOwnProperty(deepestPath) ? object[deepestPath] : fallback
   } catch (error) {
     return fallback
   }
@@ -27,7 +27,7 @@ const setByPath = (object, path, value) => {
   const pathParts = path.split(SEPARATOR)
   const deepestPath = pathParts.pop()
   pathParts.forEach(pathPart => {
-    if ((pathPart in object) === false) object[pathPart] = {}
+    if ((object.hasOwnProperty(pathPart)) === false) object[pathPart] = {}
     object = object[pathPart]
   })
 
