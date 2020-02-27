@@ -36,12 +36,12 @@ describe('Path Manager', () => {
     const nonExistentPath2 = 'nested1.nested3.value'
 
     expect(getByPath(object, existentPath))
-      .toEqual(object.nested1.nested2.value)
+      .toBe(object.nested1.nested2.value)
 
     expect(getByPath(object, nonExistentPath1, fallback))
-      .toEqual(fallback)
+      .toBe(fallback)
     expect(getByPath(object, nonExistentPath2, fallback))
-      .toEqual(fallback)
+      .toBe(fallback)
   })
 
   it('setByPath with invalid', () => {
@@ -64,6 +64,6 @@ describe('Path Manager', () => {
 
     setByPath(object, path, value)
     expect(object.nested1.nested2.value)
-      .toEqual(value)
+      .toBe(value)
   })
 })
