@@ -1,8 +1,8 @@
-const isObject = object => Object.prototype.toString.call(object) === '[object Object]' && typeof object !== 'symbol'
+const isPlainObject = object => Object.prototype.toString.call(object) === '[object Object]'
 
 const isFunction = object => Object.prototype.toString.call(object) === '[object Function]'
 
 export {
-  isObject,
+  isPlainObject,
   isFunction,
 }

@@ -11,7 +11,7 @@ import {
   getByPath,
 } from './utils/path-manager'
 import {
-  isObject,
+  isPlainObject,
   isFunction,
 } from './utils/type-checker'
 
@@ -210,7 +210,7 @@ const createVm = (Vue, vm, options) => {
 
       deletePrivateKeys (state) {
         const callback = value => {
-          if (isObject(value)) {
+          if (isPlainObject(value)) {
             delete value['$leaf']
             delete value['$sendingCount']
             delete value['$receivingCount']

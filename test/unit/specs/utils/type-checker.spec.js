@@ -1,10 +1,10 @@
 import {
-  isObject,
+  isPlainObject,
   isFunction,
 } from '../../../../src/utils/type-checker'
 
 describe('Type checker', () => {
-  it('isObject', () => {
+  it('isPlainObject', () => {
     const object = {
       object: {},
       function: () => {},
@@ -12,13 +12,13 @@ describe('Type checker', () => {
       array: [],
     }
 
-    expect(isObject(object.object))
+    expect(isPlainObject(object.object))
       .toEqual(true)
-    expect(isObject(object.function))
+    expect(isPlainObject(object.function))
       .toEqual(false)
-    expect(isObject(object.symbol))
+    expect(isPlainObject(object.symbol))
       .toEqual(false)
-    expect(isObject(object.array))
+    expect(isPlainObject(object.array))
       .toEqual(false)
   })
 
