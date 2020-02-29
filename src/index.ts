@@ -1,9 +1,13 @@
 import { createVm } from './chronos'
 
-const hasChronos = (vm, options) => [options.optionName] in vm.$options
+import {
+  Options
+} from './types/vue'
 
-const install = function (Vue, options) {
-  options = options || {}
+const hasChronos = (vm: Vue, options: Options) => options.optionName in vm.$options
+
+const install = function (Vue, options: Options) {
+  options = options || { getterName: '$chronos', optionName: 'chronos' }
   options.getterName = options.getterName || '$chronos'
   options.optionName = options.optionName || 'chronos'
 

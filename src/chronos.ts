@@ -15,7 +15,11 @@ import {
   isFunction,
 } from './utils/type-checker'
 
-const createVm = (Vue, vm, options) => {
+import {
+  Options
+} from './types/vue'
+
+const createVm = (Vue, vm, options: Options) => {
   return new Vue({
     data () {
       return {
@@ -108,7 +112,7 @@ const createVm = (Vue, vm, options) => {
         })
 
         // sending
-        const senderPathList = Array.from(new Set(
+        const senderPathList: string[] = Array.from(new Set(
           dependentGroupPaths
             .filter(group => group.some(path => receiverPathList.includes(path)))
             .reduce((list, group) => list.concat(group), [])
