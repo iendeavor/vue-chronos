@@ -10,8 +10,9 @@
     "clean": "rimraf dist",
     "build": "node scripts/build.js",
     "demo": "node scripts/demo.js",
-    "test": "jest --watch",
-    "test:once": "jest --coverage --coverage-directory test/coverage --coverage-path-ignore-patterns dist"
+    "test": "jest --clear-cache && jest",
+    "test:coverage": "rimraf test/coverage && yarn run test --coverage --coverage-directory test/coverage --coverage-reporters lcov --coverage-path-ignore-patterns dist",
+    "test:watch": "yarn run test --watch-all"
   },
   "jest": {
     "transform": {
