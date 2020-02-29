@@ -1,37 +1,39 @@
 import {
   isPlainObject,
+  isString,
 } from './type-checker'
 
 const SEPARATOR = '.'
 
-const isValidPath = value => typeof value === 'string'
-
-const getByPath = (object, path, fallback = undefined) => {
+const getByPath = (object: object, path: string, fallback?: any): any => {
   if (isPlainObject(object) === false) throw Error(`${object} is not a plain Object`)
-  if (isValidPath(path) === false) throw Error(`${object} is not a valid Path`)
+  if (isString(path) === false) throw Error(`${object} is not a valid Path`)
 
   try {
     const pathParts = path.split(SEPARATOR)
-    const deepestPath = pathParts.pop()
-    pathParts.forEach(pathPart => { object = object[pathPart] })
-    return object.hasOwnProperty(deepestPath) ? object[deepestPath] : fallback
+    const deepestPath = (pathParts.pop() as string)
+
+    let currentObject: any = object
+    pathParts.forEach(pathPart => { currentObject = currentObject[pathPart] })
+    return currentObject.hasOwnProperty(deepestPath) ? currentObject[deepestPath] : fallback
   } catch (error) {
     return fallback
   }
 }
 
-const setByPath = (object, path, value) => {
+const setByPath = (object: object, path: string, value: any): void => {
   if (isPlainObject(object) === false) throw Error(`${object} is not a plain Object`)
-  if (isValidPath(path) === false) throw Error(`${object} is not a valid Path`)
+  if (isString(path) === false) throw Error(`${object} is not a valid Path`)
 
   const pathParts = path.split(SEPARATOR)
-  const deepestPath = pathParts.pop()
-  pathParts.forEach(pathPart => {
-    if ((object.hasOwnProperty(pathPart)) === false) object[pathPart] = {}
-    object = object[pathPart]
-  })
+  const deepestPath: string = (pathParts.pop() as string)
 
-  object[deepestPath] = typeof value === 'function' ? value() : value
+  let currentObject: any = object
+  pathParts.forEach(pathPart => {
+    if ((currentObject.hasOwnProperty(pathPart)) === false) currentObject[pathPart] = {}
+    currentObject = currentObject[pathPart]
+  })
+  currentObject[deepestPath] = typeof value === 'function' ? value() : value
 }
 
 export {
