@@ -60,10 +60,16 @@ describe('Path Manager', () => {
   it('setByPath', () => {
     const object = {}
     const path = 'nested1.nested2.value'
+    const path2 = 'nested3.nested4.value'
     const value = {}
+    const getValue = () => value
 
     setByPath(object, path, value)
     expect(object.nested1.nested2.value)
+      .toBe(value)
+
+    setByPath(object, path2, getValue)
+    expect(object.nested3.nested4.value)
       .toBe(value)
   })
 })
