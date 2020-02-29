@@ -1,6 +1,6 @@
 import { createVm } from './chronos'
 
-const hasChronos = (vm, options) => [options.optionName] in vm.$options
+const hasChronos = (vm, options) => options.optionName in vm.$options
 
 const install = function (Vue, options) {
   options = options || {}
