@@ -41,4 +41,90 @@ describe('Chronos', () => {
     expect(vm.$options.computed.$chronos())
       .toBeUndefined()
   })
+
+  it('should throw with invalid config', async () => {
+    const spy = jest.spyOn(console, 'error').mockImplementation()
+    new Vue({
+      chronos: null
+    })
+    expect(console.error)
+      .toBeCalled()
+
+    spy.mockReset()
+    new Vue({
+      chronos: [
+        ['a', 'b'],
+        ['a', 'b'],
+      ]
+    })
+    expect(console.error)
+      .toBeCalled()
+
+    spy.mockReset()
+    new Vue({
+      chronos: [
+        null,
+      ]
+    })
+    expect(console.error)
+      .toBeCalled()
+
+    spy.mockReset()
+    new Vue({
+      chronos: [
+        ['a'],
+      ]
+    })
+    expect(console.error)
+      .toBeCalled()
+
+    spy.mockReset()
+    new Vue({
+      chronos: [
+        [null, null],
+      ]
+    })
+    expect(console.error)
+      .toBeCalled()
+  })
+
+  it('should works with promise', async () => {
+    const vm = new Vue({
+      data () {
+        return {
+          toInfluence: null,
+          toBeInfluenced: null,
+        }
+      },
+      chronos () {
+        return [
+          ['toInfluence', 'toBeInfluenced']
+        ]
+      }
+    })
+    let resolver
+    const promise = new Promise(resolve => {
+      resolver = resolve
+    })
+
+    expect(vm.$chronos.toInfluence.$pending)
+      .toBe(false)
+    expect(vm.$chronos.toBeInfluenced.$pending)
+      .toBe(false)
+
+    vm.$chronos.$load('toInfluence', promise)
+    await Promise.resolve()
+    await Promise.resolve()
+    expect(vm.$chronos.toInfluence.$pending)
+      .toBe(true)
+    expect(vm.$chronos.toBeInfluenced.$pending)
+      .toBe(true)
+
+    resolver()
+    await Promise.resolve()
+    expect(vm.$chronos.toInfluence.$pending)
+      .toBe(false)
+    expect(vm.$chronos.toBeInfluenced.$pending)
+      .toBe(false)
+  })
 })
