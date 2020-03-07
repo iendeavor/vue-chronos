@@ -1,42 +1,67 @@
 import {
   isPlainObject,
   isFunction,
+  isString,
 } from '../../../../src/utils/type-checker'
 
 describe('Type checker', () => {
   it('isPlainObject', () => {
-    const object = {
-      object: {},
-      function: () => {},
-      symbol: Symbol('symbol'),
-      array: [],
+    function UserDefined () {}
+
+    const trueValues = [
+      {},
+    ]
+    for (const value of trueValues) {
+      expect(isPlainObject(value)).toEqual(true)
     }
 
-    expect(isPlainObject(object.object))
-      .toEqual(true)
-    expect(isPlainObject(object.function))
-      .toEqual(false)
-    expect(isPlainObject(object.symbol))
-      .toEqual(false)
-    expect(isPlainObject(object.array))
-      .toEqual(false)
+    const falseValues = [
+      new UserDefined(),
+      Object.create(null),
+      [],
+      null,
+      undefined,
+    ]
+    for (const value of falseValues) {
+      expect(isPlainObject(value)).toEqual(false)
+    }
   })
 
   it('isFunction', () => {
-    const object = {
-      object: {},
-      function: () => {},
-      symbol: Symbol('symbol'),
-      array: [],
+    function UserDefined () {}
+
+    const trueValues = [
+      () => {},
+      UserDefined,
+    ]
+    for (const value of trueValues) {
+      expect(isFunction(value)).toEqual(true)
     }
 
-    expect(isFunction(object.function))
-      .toEqual(true)
-    expect(isFunction(object.object))
-      .toEqual(false)
-    expect(isFunction(object.symbol))
-      .toEqual(false)
-    expect(isFunction(object.array))
-      .toEqual(false)
+    const falseValues = [
+      null,
+      undefined,
+    ]
+    for (const value of falseValues) {
+      expect(isFunction(value)).toEqual(false)
+    }
+  })
+
+  it('isString', () => {
+    const trueValues = [
+      '',
+      'string',
+    ]
+    for (const value of trueValues) {
+      expect(isString(value)).toEqual(true)
+    }
+
+    const falseValues = [
+      null,
+      undefined,
+    ]
+    for (const value of falseValues) {
+      expect(isString(value)).toEqual(false)
+    }
   })
 })
