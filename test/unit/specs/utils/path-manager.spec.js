@@ -72,4 +72,26 @@ describe('Path Manager', () => {
     expect(object.nested3.nested4.value)
       .toBe(value)
   })
+
+  it('should override existed path', () => {
+    const object = {
+      nested1: null,
+      nested3: {
+        nested4: null,
+      },
+    }
+    const path = 'nested1.nested2.value'
+    const path2 = 'nested3.nested5.value'
+    const value = {}
+
+    setByPath(object, path, value)
+    expect(object.nested1.nested2.value)
+      .toBe(value)
+
+    setByPath(object, path2, value)
+    expect(object.nested3.nested4)
+      .toBe(null)
+    expect(object.nested3.nested5.value)
+      .toBe(value)
+  })
 })

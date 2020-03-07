@@ -31,6 +31,7 @@ const setByPath = (object: object, path: string, value: any): void => {
   let currentObject: any = object
   pathParts.forEach(pathPart => {
     if ((currentObject.hasOwnProperty(pathPart)) === false) currentObject[pathPart] = {}
+    if (isPlainObject(currentObject[pathPart]) === false) currentObject[pathPart] = {}
     currentObject = currentObject[pathPart]
   })
   currentObject[deepestPath] = typeof value === 'function' ? value() : value
