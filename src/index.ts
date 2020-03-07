@@ -6,9 +6,10 @@ import {
 
 const hasChronos = (vm: Vue, options: Options) => options.optionName in vm.$options
 
-const install = function (Vue, options: Options) {
-  options = options || { getterName: '$chronos', optionName: 'chronos' }
+const install = function (Vue, options: Options = { getterName: '$chronos', optionName: 'chronos' }) {
+  // istanbul ignore next
   options.getterName = options.getterName || '$chronos'
+  // istanbul ignore next
   options.optionName = options.optionName || 'chronos'
 
   Vue.mixin({

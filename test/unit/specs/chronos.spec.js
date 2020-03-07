@@ -1,10 +1,7 @@
 import Vue from 'vue'
 import Chronos from '../../../src/index'
 
-Vue.use(Chronos, {
-  optionName: 'chronos',
-  getterName: '$chronos',
-})
+Vue.use(Chronos)
 
 describe('Chronos', () => {
   it('would not create any chronos properties', () => {
