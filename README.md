@@ -5,6 +5,7 @@
 [![npm version](https://img.shields.io/npm/v/vue-chronos)](https://www.npmjs.com/package/vue-chronos)
 [![Node.js CI](https://github.com/iendeavor/vue-chronos/workflows/Node.js%20CI/badge.svg?branch=develop)](https://github.com/iendeavor/vue-chronos/actions?query=workflow%3A%22Node.js+CI%22+branch%3Adevelop)
 [![codecov](https://codecov.io/gh/iendeavor/vue-chronos/branch/develop/graph/badge.svg)](https://codecov.io/gh/iendeavor/vue-chronos)
+[![HitCount](http://hits.dwyl.com/iendeavor/vue-chronos.svg)](http://hits.dwyl.com/iendeavor/vue-chronos)
 
 ## Demo
 
